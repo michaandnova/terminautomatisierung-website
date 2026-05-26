@@ -1,0 +1,1523 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Beispiel: Premium Carwash Website für be-washed Wittlich | Terminautomatisierung</title>
+<meta name="description" content="Beispielkonzept: So könnte eine moderne Premium-Carwash-Website für eine Waschanlage in Wittlich aussehen. Demo von Terminautomatisierung, kein echter Kunde." />
+<meta name="robots" content="noindex, follow" />
+<link rel="canonical" href="http://terminautomatisierung.de/beispiele/bewashed-wittlich.html" />
+<link rel="icon" href="data:," />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  :root {
+    --bw-bg: #06080B;
+    --bw-surface: #0E1116;
+    --bw-surface-2: #14181F;
+    --bw-carbon: #1A1F27;
+    --bw-line: #232A33;
+    --bw-fg: #F2F4F7;
+    --bw-fg-dim: #9BA3AD;
+    --bw-fg-faint: #5C636C;
+    --bw-led: #2F8FFF;
+    --bw-led-soft: #5BA9FF;
+    --bw-led-deep: #1567D6;
+    --bw-chrome: #C7CDD4;
+    --bw-signal: #FF3B3B;
+    --bw-radius: 8px;
+  }
+
+  html, body {
+    background: var(--bw-bg);
+    color: var(--bw-fg);
+  }
+
+  body {
+    background:
+      radial-gradient(circle at 18% 4%, rgba(47, 143, 255, 0.12), transparent 28%),
+      radial-gradient(circle at 94% 24%, rgba(255, 255, 255, 0.05), transparent 28%),
+      var(--bw-bg);
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.22;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+    background-size: 64px 64px;
+    mask-image: linear-gradient(to bottom, transparent 0, #000 12%, #000 82%, transparent 100%);
+  }
+
+  main, footer, .demo-banner, .bw-nav { position: relative; z-index: 1; }
+
+  section { padding: clamp(96px, 12vh, 160px) 0; }
+  .container { max-width: 1280px; padding: 0 32px; }
+  .bw-container { max-width: 1280px; margin: 0 auto; padding: 0 32px; }
+
+  .demo-banner {
+    position: sticky;
+    top: 0;
+    z-index: 80;
+    background: #080B10;
+    color: var(--bw-fg);
+    border-bottom: 1px solid rgba(199, 205, 212, 0.16);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 11px 24px;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .demo-banner .tag,
+  .bw-mono,
+  .bw-eyebrow,
+  .bw-spec,
+  .bw-card small,
+  .bw-program-name,
+  .bw-feature-label,
+  .bw-wallet-label,
+  .bw-social-label {
+    font-family: 'JetBrains Mono', monospace;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+  }
+
+  .demo-banner .tag {
+    font-size: 10px;
+    background: rgba(47,143,255,0.18);
+    border: 1px solid rgba(47,143,255,0.34);
+    color: var(--bw-led-soft);
+    padding: 5px 10px;
+    border-radius: 100px;
+  }
+
+  .demo-banner .txt {
+    font-size: 13px;
+    color: rgba(242,244,247,0.86);
+    font-weight: 300;
+  }
+
+  .demo-banner .txt strong { color: var(--bw-fg); font-weight: 500; }
+
+  .demo-banner a {
+    font-size: 12.5px;
+    color: var(--bw-fg);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid rgba(199,205,212,0.28);
+    padding: 6px 14px;
+    border-radius: 100px;
+    transition: border-color .18s, background .18s;
+  }
+
+  .demo-banner a:hover { border-color: rgba(47,143,255,0.6); background: rgba(47,143,255,0.1); }
+  .demo-banner svg { width: 12px; height: 12px; }
+
+  .bw-nav {
+    position: sticky;
+    top: 50px;
+    z-index: 70;
+    border-bottom: 1px solid rgba(199,205,212,0.12);
+    background: rgba(6,8,11,0.72);
+    backdrop-filter: blur(20px);
+    padding: 16px 0;
+  }
+
+  .bw-nav .inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+
+  .bw-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--bw-fg);
+    text-decoration: none;
+    letter-spacing: -0.05em;
+    font-size: 22px;
+    font-weight: 650;
+  }
+
+  .bw-brand .be { color: var(--bw-chrome); font-weight: 500; }
+  .bw-brand .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--bw-led);
+    box-shadow: 0 0 18px rgba(47,143,255,0.9);
+  }
+
+  .bw-nav-links { display: flex; align-items: center; gap: 6px; }
+
+  .bw-nav-links a {
+    color: var(--bw-fg-dim);
+    text-decoration: none;
+    font-size: 13.5px;
+    padding: 8px 12px;
+    border-radius: var(--bw-radius);
+    transition: color .18s, background .18s;
+  }
+
+  .bw-nav-links a:hover {
+    color: var(--bw-fg);
+    background: rgba(255,255,255,0.06);
+  }
+
+  .bw-location {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--bw-fg);
+    text-decoration: none;
+    font-size: 12.5px;
+    padding: 9px 14px;
+    border-radius: 100px;
+    border: 1px solid rgba(199,205,212,0.34);
+    white-space: nowrap;
+  }
+
+  .bw-location svg { width: 14px; height: 14px; color: var(--bw-led-soft); }
+
+  .bw-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 50px;
+    padding: 14px 24px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    border: 1px solid transparent;
+    transition: transform .18s, box-shadow .18s, background .18s, border-color .18s;
+  }
+
+  .bw-btn svg { width: 17px; height: 17px; }
+
+  .bw-btn-primary {
+    background: var(--bw-led);
+    color: #fff;
+    box-shadow: 0 0 0 1px rgba(47,143,255,.4), 0 0 40px -14px rgba(47,143,255,.7);
+  }
+
+  .bw-btn-primary:hover { background: var(--bw-led-soft); transform: translateY(-1px); }
+
+  .bw-btn-ghost {
+    border-color: rgba(199,205,212,0.36);
+    color: var(--bw-fg);
+    background: rgba(255,255,255,0.02);
+  }
+
+  .bw-btn-ghost:hover { border-color: rgba(47,143,255,0.6); background: rgba(47,143,255,0.07); }
+
+  .bw-hero {
+    min-height: calc(100vh - 96px);
+    display: flex;
+    align-items: stretch;
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid rgba(199,205,212,0.12);
+  }
+
+  .bw-hero-media {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(90deg, rgba(6,8,11,0.92) 0%, rgba(6,8,11,0.64) 38%, rgba(6,8,11,0.22) 68%, rgba(6,8,11,0.7) 100%),
+      linear-gradient(0deg, var(--bw-bg) 0%, rgba(6,8,11,0.08) 36%, rgba(6,8,11,0.14) 100%),
+      url('assets/bewashed/hero-carwash-night.webp');
+    background-size: cover;
+    background-position: center 44%;
+    transform: scale(1.02);
+    animation: bwKen 24s ease-in-out infinite alternate;
+  }
+
+  .bw-hero-media::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(112deg, transparent 0%, transparent 42%, rgba(91,169,255,0.0) 47%, rgba(91,169,255,0.24) 50%, rgba(255,255,255,0.16) 51%, rgba(91,169,255,0.02) 54%, transparent 60%, transparent 100%),
+      repeating-linear-gradient(108deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 14px);
+    mix-blend-mode: screen;
+    opacity: 0.7;
+    animation: bwSweep 7s ease-in-out infinite;
+  }
+
+  .bw-rain {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(100deg, transparent 0 28px, rgba(255,255,255,0.23) 29px 30px, transparent 31px 78px);
+    transform: translateY(-20%);
+    animation: bwRain 13s linear infinite;
+  }
+
+  .bw-hero .bw-container {
+    min-height: calc(100vh - 96px);
+    display: flex;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+    padding-top: 92px;
+    padding-bottom: 88px;
+  }
+
+  .bw-hero-copy { max-width: 820px; }
+
+  .bw-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--bw-led-soft);
+    font-size: 11px;
+    margin-bottom: 24px;
+  }
+
+  .bw-eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--bw-led);
+    box-shadow: 0 0 0 5px rgba(47,143,255,0.14), 0 0 24px rgba(47,143,255,0.8);
+  }
+
+  .bw-hero h1 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: clamp(48px, 7vw, 104px);
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    text-transform: uppercase;
+    font-weight: 720;
+    max-width: 780px;
+    margin-bottom: 26px;
+  }
+
+  .bw-hero h1 span {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(242,244,247,0.58);
+    text-shadow: none;
+  }
+
+  .bw-sub {
+    color: rgba(242,244,247,0.78);
+    font-size: clamp(17px, 1.65vw, 22px);
+    line-height: 1.45;
+    max-width: 540px;
+    font-weight: 300;
+    margin-bottom: 34px;
+  }
+
+  .bw-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+  .bw-spec-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 46px;
+  }
+
+  .bw-spec {
+    color: rgba(242,244,247,0.82);
+    font-size: 10.5px;
+    border: 1px solid rgba(199,205,212,0.22);
+    background: rgba(6,8,11,0.42);
+    border-radius: 999px;
+    padding: 10px 12px;
+    backdrop-filter: blur(12px);
+  }
+
+  .bw-section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.55fr);
+    gap: 64px;
+    align-items: end;
+    margin-bottom: 56px;
+  }
+
+  .bw-section-head.center {
+    display: block;
+    text-align: center;
+    max-width: 840px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .bw-section-head h2 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: clamp(38px, 5vw, 72px);
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+    text-transform: uppercase;
+    font-weight: 720;
+    margin-top: 14px;
+  }
+
+  .bw-section-head p {
+    color: var(--bw-fg-dim);
+    font-size: 17px;
+    line-height: 1.58;
+    font-weight: 300;
+  }
+
+  .bw-programs {
+    overflow-x: clip;
+    border-top: 1px solid rgba(199,205,212,0.14);
+    border-bottom: 1px solid rgba(199,205,212,0.12);
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.03), transparent 34%),
+      var(--bw-bg);
+  }
+
+  .bw-program-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .bw-card {
+    position: relative;
+    overflow: hidden;
+    min-height: 390px;
+    padding: 28px;
+    border-radius: var(--bw-radius);
+    border: 1px solid rgba(199,205,212,0.16);
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.055), rgba(255,255,255,0.006) 42%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.03) 0 1px, transparent 1px 10px),
+      var(--bw-surface);
+    transition: transform .2s, border-color .2s, box-shadow .2s;
+  }
+
+  .bw-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--bw-led);
+    opacity: 0.75;
+  }
+
+  .bw-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(47,143,255,0.55);
+    box-shadow: 0 0 0 1px rgba(47,143,255,.25), 0 24px 80px -44px rgba(47,143,255,.65);
+  }
+
+  .bw-card.recommended {
+    border-color: rgba(47,143,255,0.72);
+    box-shadow: 0 0 0 1px rgba(47,143,255,.3), 0 0 56px -28px rgba(47,143,255,.8);
+  }
+
+  .bw-card small {
+    display: inline-flex;
+    color: var(--bw-led-soft);
+    font-size: 10px;
+    margin-bottom: 18px;
+  }
+
+  .bw-program-name {
+    color: var(--bw-fg);
+    font-size: 15px;
+    margin-bottom: 14px;
+  }
+
+  .bw-card h3 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    font-weight: 720;
+    margin-bottom: 14px;
+  }
+
+  .bw-card p {
+    color: var(--bw-fg-dim);
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 24px;
+  }
+
+  .bw-card ul { list-style: none; display: grid; gap: 12px; margin-bottom: 26px; }
+
+  .bw-card li {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    color: rgba(242,244,247,0.82);
+    font-size: 13.5px;
+  }
+
+  .bw-card li svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+    color: var(--bw-led-soft);
+    margin-top: 2px;
+  }
+
+  .bw-card .bw-btn {
+    width: 100%;
+    min-height: 44px;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  .bw-split {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.78fr);
+    gap: 64px;
+    align-items: center;
+  }
+
+  .bw-split.reverse {
+    grid-template-columns: minmax(0, 0.78fr) minmax(0, 1fr);
+  }
+
+  .bw-media {
+    position: relative;
+    min-height: 520px;
+    border-radius: var(--bw-radius);
+    overflow: hidden;
+    border: 1px solid rgba(199,205,212,0.14);
+    background: var(--bw-surface);
+    box-shadow: 0 32px 110px -72px rgba(47,143,255,0.55);
+  }
+
+  .bw-media::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(0deg, rgba(6,8,11,0.9), transparent 44%, rgba(6,8,11,0.26)),
+      linear-gradient(90deg, rgba(47,143,255,0.18), transparent 36%);
+    z-index: 1;
+  }
+
+  .bw-media img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    object-fit: cover;
+    filter: saturate(0.82) contrast(1.08) brightness(0.74);
+    transform: scale(1.02);
+  }
+
+  .bw-media-caption {
+    position: absolute;
+    z-index: 2;
+    left: 24px;
+    right: 24px;
+    bottom: 24px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    align-items: flex-end;
+  }
+
+  .bw-media-caption .big {
+    font-family: 'Geist', sans-serif;
+    font-weight: 720;
+    font-size: clamp(28px, 4vw, 54px);
+    line-height: .95;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+
+  .bw-media-caption .tiny {
+    color: var(--bw-led-soft);
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .bw-copy h2 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: clamp(38px, 5vw, 70px);
+    line-height: 0.94;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    font-weight: 720;
+    margin: 14px 0 20px;
+  }
+
+  .bw-copy p {
+    color: var(--bw-fg-dim);
+    font-size: 17px;
+    line-height: 1.6;
+    font-weight: 300;
+    max-width: 510px;
+  }
+
+  .bw-feature-list {
+    display: grid;
+    gap: 14px;
+    margin-top: 32px;
+    max-width: 560px;
+  }
+
+  .bw-feature {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
+    padding: 16px;
+    border: 1px solid rgba(199,205,212,0.13);
+    border-radius: var(--bw-radius);
+    background: rgba(255,255,255,0.025);
+  }
+
+  .bw-feature svg {
+    width: 42px;
+    height: 42px;
+    color: var(--bw-led-soft);
+    padding: 10px;
+    border: 1px solid rgba(47,143,255,0.22);
+    background: rgba(47,143,255,0.08);
+    border-radius: var(--bw-radius);
+  }
+
+  .bw-feature-label {
+    color: var(--bw-fg);
+    font-size: 10px;
+    margin-bottom: 5px;
+  }
+
+  .bw-feature span:last-child {
+    display: block;
+    color: var(--bw-fg-dim);
+    font-size: 13.5px;
+    line-height: 1.45;
+  }
+
+  .bw-truck {
+    background:
+      linear-gradient(135deg, rgba(199,205,212,0.05), transparent 42%),
+      repeating-linear-gradient(45deg, rgba(255,255,255,0.026) 0 1px, transparent 1px 12px),
+      #080A0D;
+    border-top: 1px solid rgba(199,205,212,0.12);
+    border-bottom: 1px solid rgba(199,205,212,0.12);
+  }
+
+  .bw-signal {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    color: var(--bw-chrome);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
+    border: 1px solid rgba(255,59,59,0.28);
+    padding: 7px 10px;
+    border-radius: 100px;
+    background: rgba(255,59,59,0.06);
+  }
+
+  .bw-signal::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--bw-signal);
+    box-shadow: 0 0 14px rgba(255,59,59,0.72);
+  }
+
+  .bw-tech-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .bw-tech-card {
+    padding: 28px;
+    border-radius: var(--bw-radius);
+    border: 1px solid rgba(199,205,212,0.14);
+    background:
+      linear-gradient(135deg, rgba(255,255,255,0.045), transparent 46%),
+      var(--bw-surface);
+    min-height: 210px;
+  }
+
+  .bw-tech-card svg {
+    width: 32px;
+    height: 32px;
+    color: var(--bw-led-soft);
+    margin-bottom: 28px;
+  }
+
+  .bw-tech-card h3 {
+    font-size: 19px;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    margin-bottom: 9px;
+  }
+
+  .bw-tech-card p {
+    color: var(--bw-fg-dim);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+
+  .bw-membership {
+    background:
+      radial-gradient(circle at 72% 28%, rgba(47,143,255,0.2), transparent 34%),
+      linear-gradient(180deg, #080B10 0%, var(--bw-bg) 100%);
+    border-top: 1px solid rgba(199,205,212,0.12);
+  }
+
+  .bw-wallet {
+    position: relative;
+    min-height: 370px;
+    border-radius: 18px;
+    padding: 28px;
+    background:
+      linear-gradient(128deg, rgba(255,255,255,0.28), rgba(255,255,255,0.04) 34%, rgba(47,143,255,0.16) 62%, rgba(255,255,255,0.08)),
+      repeating-linear-gradient(135deg, rgba(255,255,255,0.05) 0 1px, transparent 1px 12px),
+      #111720;
+    border: 1px solid rgba(199,205,212,0.32);
+    box-shadow: 0 0 0 1px rgba(47,143,255,.22), 0 38px 100px -54px rgba(47,143,255,.8);
+    transform: perspective(1000px) rotateX(7deg) rotateY(-9deg);
+    overflow: hidden;
+  }
+
+  .bw-wallet::after {
+    content: "";
+    position: absolute;
+    inset: -40%;
+    background: linear-gradient(115deg, transparent 38%, rgba(255,255,255,0.18) 50%, transparent 62%);
+    transform: translateX(-38%);
+    animation: bwCardSweep 9s ease-in-out infinite;
+  }
+
+  .bw-wallet-content { position: relative; z-index: 2; min-height: 314px; display: flex; flex-direction: column; justify-content: space-between; }
+
+  .bw-wallet-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    align-items: flex-start;
+  }
+
+  .bw-wallet-brand {
+    font-size: 28px;
+    letter-spacing: -0.06em;
+    font-weight: 700;
+  }
+
+  .bw-wallet-brand span { color: var(--bw-chrome); font-weight: 500; }
+
+  .bw-qr {
+    width: 86px;
+    height: 86px;
+    border-radius: 8px;
+    background:
+      linear-gradient(90deg, #fff 9px, transparent 9px 18px, #fff 18px 27px, transparent 27px 36px, #fff 36px 45px, transparent 45px 54px, #fff 54px 63px, transparent 63px),
+      linear-gradient(#fff 9px, transparent 9px 18px, #fff 18px 27px, transparent 27px 36px, #fff 36px 45px, transparent 45px 54px, #fff 54px 63px, transparent 63px),
+      #0b0f15;
+    background-blend-mode: difference;
+    border: 8px solid #fff;
+  }
+
+  .bw-wallet-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  .bw-wallet-stat {
+    padding: 14px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(6,8,11,0.32);
+    backdrop-filter: blur(12px);
+  }
+
+  .bw-wallet-label {
+    color: rgba(242,244,247,0.58);
+    font-size: 9px;
+    margin-bottom: 8px;
+  }
+
+  .bw-wallet-stat strong {
+    font-size: 19px;
+    letter-spacing: -0.025em;
+  }
+
+  .bw-before-after {
+    border-top: 1px solid rgba(199,205,212,0.12);
+  }
+
+  .bw-slider {
+    position: relative;
+    min-height: min(620px, 62vw);
+    border-radius: var(--bw-radius);
+    overflow: hidden;
+    border: 1px solid rgba(199,205,212,0.16);
+    background: var(--bw-surface);
+    cursor: ew-resize;
+    user-select: none;
+    touch-action: none;
+  }
+
+  .bw-slide-img {
+    position: absolute;
+    inset: 0;
+    background-image: url('assets/bewashed/wet-detail.webp');
+    background-size: cover;
+    background-position: center;
+  }
+
+  .bw-slide-before {
+    filter: grayscale(0.55) brightness(0.38) contrast(1.35) saturate(0.55);
+  }
+
+  .bw-slide-before::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 22% 28%, rgba(80,67,52,0.9) 0 2px, transparent 3px 18px),
+      radial-gradient(circle at 78% 46%, rgba(78,58,42,0.7) 0 2px, transparent 3px 22px),
+      repeating-linear-gradient(104deg, rgba(160,136,104,0.12) 0 2px, transparent 2px 18px),
+      rgba(50,42,35,0.18);
+    mix-blend-mode: screen;
+  }
+
+  .bw-slide-after {
+    filter: saturate(1.05) brightness(0.82) contrast(1.12);
+    clip-path: inset(0 0 0 48%);
+  }
+
+  .bw-slider-line {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 48%;
+    width: 2px;
+    background: var(--bw-led);
+    box-shadow: 0 0 28px rgba(47,143,255,0.95);
+    z-index: 3;
+  }
+
+  .bw-slider-handle {
+    position: absolute;
+    top: 50%;
+    left: 48%;
+    z-index: 4;
+    width: 58px;
+    height: 58px;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.5);
+    background: rgba(6,8,11,0.72);
+    backdrop-filter: blur(10px);
+    display: grid;
+    place-items: center;
+    box-shadow: 0 0 0 1px rgba(47,143,255,.35), 0 0 38px -8px rgba(47,143,255,.8);
+  }
+
+  .bw-slider-handle svg { width: 24px; height: 24px; color: var(--bw-fg); }
+
+  .bw-slider-label {
+    position: absolute;
+    z-index: 5;
+    top: 18px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    background: rgba(6,8,11,0.65);
+    border: 1px solid rgba(199,205,212,0.2);
+    color: var(--bw-fg);
+    font-size: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+  }
+
+  .bw-slider-label.before { left: 18px; }
+  .bw-slider-label.after { right: 18px; color: var(--bw-led-soft); }
+
+  .bw-social-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+  }
+
+  .bw-social-tile {
+    aspect-ratio: 1;
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--bw-radius);
+    border: 1px solid rgba(199,205,212,0.14);
+    background: var(--bw-surface);
+  }
+
+  .bw-social-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: saturate(0.82) brightness(0.58) contrast(1.12);
+    transition: transform .28s, filter .28s;
+  }
+
+  .bw-social-tile:hover img { transform: scale(1.06); filter: saturate(1) brightness(0.72) contrast(1.15); }
+
+  .bw-social-tile::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(0deg, rgba(6,8,11,0.76), transparent 58%);
+  }
+
+  .bw-social-label {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
+    z-index: 2;
+    color: var(--bw-fg);
+    font-size: 9px;
+  }
+
+  .bw-play {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 2;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(6,8,11,0.62);
+    border: 1px solid rgba(199,205,212,0.24);
+    color: var(--bw-led-soft);
+  }
+
+  .bw-play svg { width: 15px; height: 15px; }
+
+  .bw-final {
+    text-align: center;
+    background:
+      radial-gradient(circle at 50% 18%, rgba(47,143,255,0.22), transparent 34%),
+      var(--bw-bg);
+  }
+
+  .bw-final h2 {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-size: clamp(42px, 6vw, 86px);
+    line-height: .93;
+    letter-spacing: -0.052em;
+    text-transform: uppercase;
+    max-width: 860px;
+    margin: 16px auto 22px;
+  }
+
+  .bw-final p {
+    color: var(--bw-fg-dim);
+    font-size: 18px;
+    line-height: 1.55;
+    max-width: 620px;
+    margin: 0 auto 36px;
+    font-weight: 300;
+  }
+
+  .bw-final .cta-row { justify-content: center; }
+
+  .bw-quote {
+    margin: 0 auto;
+    max-width: 900px;
+    text-align: center;
+    padding: 64px 40px;
+    border-top: 1px solid rgba(199,205,212,0.12);
+    border-bottom: 1px solid rgba(199,205,212,0.12);
+  }
+
+  .bw-quote p {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(36px, 5vw, 76px);
+    line-height: .96;
+    letter-spacing: -0.025em;
+    color: var(--bw-fg);
+  }
+
+  .bw-quote span { color: var(--bw-led-soft); font-style: italic; }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+
+  .reveal.in { opacity: 1; transform: translateY(0); }
+
+  footer {
+    background: #070A0E;
+    border-top: 1px solid rgba(199,205,212,0.12);
+    color: var(--bw-fg);
+  }
+
+  footer .top { border-bottom-color: rgba(199,205,212,0.12); }
+  footer .brand p,
+  footer .col h4,
+  footer .copy,
+  footer .meta { color: var(--bw-fg-dim); }
+  footer .col a { color: var(--bw-fg); }
+  footer .col a:hover,
+  footer .meta span { color: var(--bw-led-soft); }
+  footer .logo .brand-strong,
+  footer .logo .brand-light { color: var(--bw-fg); }
+  footer .logo-icon g { stroke: var(--bw-fg); }
+  footer .logo-icon circle { fill: var(--bw-led); }
+  footer .logo-icon > path { stroke: var(--bw-led); }
+
+  @keyframes bwKen {
+    0% { transform: scale(1.02) translate3d(0,0,0); }
+    100% { transform: scale(1.07) translate3d(-1.5%, 1%, 0); }
+  }
+
+  @keyframes bwSweep {
+    0%, 22% { transform: translateX(-68%); opacity: 0; }
+    42% { opacity: .75; }
+    70%, 100% { transform: translateX(68%); opacity: 0; }
+  }
+
+  @keyframes bwRain {
+    0% { transform: translateY(-20%); }
+    100% { transform: translateY(20%); }
+  }
+
+  @keyframes bwCardSweep {
+    0%, 36% { transform: translateX(-42%); opacity: 0; }
+    54% { opacity: .85; }
+    78%, 100% { transform: translateX(44%); opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.001ms !important;
+    }
+    .reveal { opacity: 1; transform: none; }
+  }
+
+  @media (max-width: 1080px) {
+    .bw-nav-links { display: none; }
+    .bw-section-head,
+    .bw-split,
+    .bw-split.reverse { grid-template-columns: 1fr; gap: 40px; }
+    .bw-program-grid {
+      display: flex;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 10px;
+      overscroll-behavior-inline: contain;
+    }
+    .bw-card {
+      min-width: min(82vw, 360px);
+      scroll-snap-align: start;
+    }
+    .bw-tech-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .bw-social-grid { grid-template-columns: repeat(3, 1fr); }
+    .bw-wallet { transform: none; }
+  }
+
+  @media (max-width: 768px) {
+    .bw-container,
+    .container { padding: 0 22px; }
+    section { padding: 82px 0; }
+    .bw-nav { top: 70px; }
+    .bw-location { display: none; }
+    .bw-hero,
+    .bw-hero .bw-container { min-height: auto; }
+    .bw-hero .bw-container { padding-top: 88px; padding-bottom: 72px; }
+    .bw-hero h1 { font-size: clamp(42px, 15vw, 64px); }
+    .bw-hero-ctas .bw-btn,
+    .bw-final .bw-btn { width: 100%; }
+    .bw-spec-row { gap: 8px; margin-top: 32px; }
+    .bw-media { min-height: 420px; }
+    .bw-media-caption { display: block; }
+    .bw-media-caption .tiny { margin-top: 14px; display: inline-flex; }
+    .bw-tech-grid { grid-template-columns: 1fr; }
+    .bw-wallet-grid { grid-template-columns: 1fr; }
+    .bw-slider { min-height: 520px; }
+    .bw-social-grid { grid-template-columns: repeat(2, 1fr); }
+    .bw-quote { padding: 48px 18px; }
+  }
+
+  @media (max-width: 520px) {
+    .demo-banner { padding: 10px 14px; }
+    .demo-banner .txt { font-size: 12px; }
+    .bw-nav { top: 92px; }
+    .bw-brand { font-size: 19px; }
+    .bw-section-head h2,
+    .bw-copy h2 { font-size: 40px; }
+    .bw-card { min-width: 84vw; padding: 24px; }
+    .bw-media { min-height: 360px; }
+    .bw-slider { min-height: 430px; }
+    footer .top { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-banner">
+  <span class="tag">Beispielkonzept</span>
+  <span class="txt"><strong>Demo für eine Premium-Waschstraße</strong> - kein echter Kunde, keine echten Daten, kein offizieller be-washed Relaunch.</span>
+  <a href="../webdesign.html" aria-label="Zurück zur Webdesign-Seite">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Zurück zu Webdesign
+  </a>
+</div>
+
+<nav class="bw-nav" aria-label="be-washed Demo Navigation">
+  <div class="bw-container inner">
+    <a href="#" class="bw-brand" aria-label="be-washed Demo Start">
+      <span class="be">be</span><span>washed</span><span class="dot"></span>
+    </a>
+    <div class="bw-nav-links">
+      <a href="#programme">Programme</a>
+      <a href="#selfwash">Self-Wash</a>
+      <a href="#truckwash">Truckwash</a>
+      <a href="#kundenkarte">Kundenkarte</a>
+    </div>
+    <a href="#truckwash" class="bw-location">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Standort Wittlich
+    </a>
+  </div>
+</nav>
+
+<main>
+  <header class="bw-hero" id="start">
+    <div class="bw-hero-media" role="img" aria-label="Dunkle Waschanlage bei Nacht mit Fahrzeug unter hellem Licht"></div>
+    <div class="bw-rain"></div>
+    <div class="bw-container">
+      <div class="bw-hero-copy reveal">
+        <div class="bw-eyebrow">Wittlich · Premium Fahrzeugpflege</div>
+        <h1>Dein Auto.<br><span>Wie neu.</span></h1>
+        <p class="bw-sub">Eine Website-Demo für Fahrzeugpflege, die nicht nach Waschstraße klingt, sondern nach Werterhalt, Technik und Glanz.</p>
+        <div class="bw-hero-ctas">
+          <a href="#programme" class="bw-btn bw-btn-primary">
+            Waschprogramme entdecken
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#ablauf" class="bw-btn bw-btn-ghost">So läuft's ab</a>
+        </div>
+        <div class="bw-spec-row" aria-label="Demo-Leistungsbereiche">
+          <span class="bw-spec">SB-Boxen</span>
+          <span class="bw-spec">Lackschonend</span>
+          <span class="bw-spec">Truckwash</span>
+          <span class="bw-spec">Kundenkarte</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section id="programme" class="bw-programs">
+    <div class="bw-container">
+      <div class="bw-section-head reveal">
+        <div>
+          <div class="bw-eyebrow">Performance-Stufen statt Preisliste</div>
+          <h2>Waschprogramme wie Konfiguration.</h2>
+        </div>
+        <p>Die Demo inszeniert jede Pflege-Stufe als eigenes Setup: klar unterscheidbar, hochwertig, technisch. Keine Rabattoptik, keine Tabellenwand.</p>
+      </div>
+      <div class="bw-program-grid">
+        <article class="bw-card reveal">
+          <small>Stufe 01</small>
+          <div class="bw-program-name">Essential</div>
+          <h3>Clean Base</h3>
+          <p>Die schnelle Pflege für den sauberen Auftritt im Alltag.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Vorwäsche als klares Ritual</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Lackschonender Waschprozess</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Sauberer Finish-Look</li>
+          </ul>
+          <a href="#ablauf" class="bw-btn bw-btn-ghost">Programm wählen</a>
+        </article>
+        <article class="bw-card reveal recommended">
+          <small>Empfohlen</small>
+          <div class="bw-program-name">Protect</div>
+          <h3>Shield Wash</h3>
+          <p>Für Fahrer, denen Glanz und Schutz wichtiger sind als nur sauber.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Vorwäsche und Felgenfokus</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Glanzverstärkendes Finish</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Schutzgefühl für den Alltag</li>
+          </ul>
+          <a href="#kundenkarte" class="bw-btn bw-btn-primary">Kundenkarte ansehen</a>
+        </article>
+        <article class="bw-card reveal">
+          <small>Stufe 03</small>
+          <div class="bw-program-name">Perfect</div>
+          <h3>Gloss Run</h3>
+          <p>Der sichtbare Premium-Moment: Licht, Reflexion, Tiefe.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Intensive Außenpflege</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Hochwertiger Trockenlauf</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Glanz als erster Eindruck</li>
+          </ul>
+          <a href="#vergleich" class="bw-btn bw-btn-ghost">Vorher / Nachher</a>
+        </article>
+        <article class="bw-card reveal">
+          <small>Stufe 04</small>
+          <div class="bw-program-name">Ceramic</div>
+          <h3>Rain Skin</h3>
+          <p>Das Konzept für maximale Inszenierung: Wasser perlt, Lack wirkt tiefer.</p>
+          <ul>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Versiegelungsgefühl</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Premium-Chemie als Story</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12l5 5L20 7"/></svg>Für gepflegte Fahrzeuge</li>
+          </ul>
+          <a href="#community" class="bw-btn bw-btn-ghost">Community ansehen</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="selfwash">
+    <div class="bw-container">
+      <div class="bw-split">
+        <div class="bw-media reveal" role="img" aria-label="Self-Wash-Bucht mit Hochdruckreiniger">
+          <img src="assets/bewashed/self-wash-bay.webp" alt="" loading="lazy" />
+          <div class="bw-media-caption">
+            <div class="big">Self Wash<br>Experience</div>
+            <div class="tiny bw-mono">NIGHT BAY · WASSER · KONTROLLE</div>
+          </div>
+        </div>
+        <div class="bw-copy reveal">
+          <div class="bw-eyebrow">Deine Box. Deine Zeit.</div>
+          <h2>SB-Waschen mit Car-Culture-Gefühl.</h2>
+          <p>Nicht einfach SB-Boxen, sondern ein eigener Moment: Hochdruck, Schaum, Licht, Sound vom Parkplatz und die Kontrolle über jedes Detail.</p>
+          <div class="bw-feature-list">
+            <div class="bw-feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 14c4-7 12-7 16 0"/><path d="M6 18c3-4 9-4 12 0"/><path d="M12 4v16"/></svg>
+              <div><div class="bw-feature-label">Hochdruck</div><span>Der Waschmoment wird als kontrollierte Pflege inszeniert, nicht als Münzautomat.</span></div>
+            </div>
+            <div class="bw-feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2s6 6.5 6 12a6 6 0 0 1-12 0c0-5.5 6-12 6-12z"/></svg>
+              <div><div class="bw-feature-label">Schaum &amp; Klarspülung</div><span>Die Inhalte bleiben beispielhaft, aber die Präsentation fühlt sich klar und hochwertig an.</span></div>
+            </div>
+            <div class="bw-feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="M8 8h8v8H8z"/></svg>
+              <div><div class="bw-feature-label">Urbaner Look</div><span>LED-Licht, dunkle Flächen und präzise Labels machen aus Funktion ein Erlebnis.</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="truckwash" class="bw-truck">
+    <div class="bw-container">
+      <div class="bw-split reverse">
+        <div class="bw-copy reveal">
+          <span class="bw-signal">Business Bay</span>
+          <h2>Truckwash für Fuhrparks und harte Einsätze.</h2>
+          <p>Der Firmenkundenbereich wirkt bewusst industrieller: weniger Lifestyle, mehr Zuverlässigkeit, Fläche, Durchsatz und professionelle Reinigung für Transporter, LKW und Flotten.</p>
+          <div class="bw-feature-list">
+            <div class="bw-feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7h13v10H3z"/><path d="M16 11h3l2 3v3h-5z"/><circle cx="7" cy="19" r="2"/><circle cx="18" cy="19" r="2"/></svg>
+              <div><div class="bw-feature-label">Flotte</div><span>Klare Ansprache für Handwerker, Lieferdienste und regionale Firmen.</span></div>
+            </div>
+            <div class="bw-feature">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/><path d="M9 12l2 2 4-5"/></svg>
+              <div><div class="bw-feature-label">Verlässlichkeit</div><span>Business-Kunden brauchen Vertrauen, nicht Rabattfeuerwerk.</span></div>
+            </div>
+          </div>
+          <div style="margin-top: 30px;">
+            <a href="#final" class="bw-btn bw-btn-ghost">Für Fuhrparks anfragen</a>
+          </div>
+        </div>
+        <div class="bw-media reveal" role="img" aria-label="Gewerbliches Fahrzeug wird mit Hochdruck gereinigt">
+          <img src="assets/bewashed/truck-wash.webp" alt="" loading="lazy" />
+          <div class="bw-media-caption">
+            <div class="big">Industrial<br>Clean</div>
+            <div class="tiny bw-mono">FUHRPARK · TRANSPORTER · LKW</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="ablauf">
+    <div class="bw-container">
+      <div class="bw-section-head center reveal">
+        <div class="bw-eyebrow">High-End-Technologie als Servicegefühl</div>
+        <h2>Warum diese Demo sofort hochwertiger wirkt.</h2>
+        <p>Die Vorteile einer Waschstraße werden nicht in einer Standard-Liste versteckt, sondern wie technische Module präsentiert.</p>
+      </div>
+      <div class="bw-tech-grid">
+        <article class="bw-tech-card reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg>
+          <h3>Lackschonende Reinigung</h3>
+          <p>Der Wert des Fahrzeugs steht im Vordergrund, nicht nur die schnelle Außenwäsche.</p>
+        </article>
+        <article class="bw-tech-card reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 12h16"/><path d="M12 4v16"/><circle cx="12" cy="12" r="7"/></svg>
+          <h3>Moderne Waschtechnik</h3>
+          <p>Die Technik wird sichtbar gemacht: präzise, sauber, kontrolliert und professionell.</p>
+        </article>
+        <article class="bw-tech-card reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 2v7L4 20a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2L14 9V2"/><path d="M8 2h8"/></svg>
+          <h3>Premium-Chemie</h3>
+          <p>Die Sprache hebt Pflegequalität, Finish und Materialgefühl hervor.</p>
+        </article>
+        <article class="bw-tech-card reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 12c5-8 13-8 18 0"/><path d="M5 17c4-5 10-5 14 0"/></svg>
+          <h3>Vorwäsche</h3>
+          <p>Der erste Kontakt wird zum Ritual: gründlich, sichtbar und vertrauensbildend.</p>
+        </article>
+        <article class="bw-tech-card reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/><path d="M12 4v5M12 15v5M4 12h5M15 12h5"/></svg>
+          <h3>Felgenreinigung</h3>
+          <p>Detailbereiche bekommen eigene Aufmerksamkeit, weil Autofans genau dort hinschauen.</p>
+        </article>
+        <article class="bw-tech-card reveal">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16v16H4z"/><path d="M8 8h8v8H8z"/><path d="M2 12h2M20 12h2M12 2v2M12 20v2"/></svg>
+          <h3>Schnelle Abläufe</h3>
+          <p>Auch Premium darf effizient sein: klare Wege, klare Auswahl, schnelle Entscheidung.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="kundenkarte" class="bw-membership">
+    <div class="bw-container">
+      <div class="bw-split">
+        <div class="bw-wallet reveal" aria-label="Konzept einer digitalen be-washed Kundenkarte">
+          <div class="bw-wallet-content">
+            <div class="bw-wallet-top">
+              <div>
+                <div class="bw-wallet-label">Premium Membership</div>
+                <div class="bw-wallet-brand"><span>be</span>washed</div>
+              </div>
+              <div class="bw-qr" aria-hidden="true"></div>
+            </div>
+            <div class="bw-wallet-grid">
+              <div class="bw-wallet-stat"><div class="bw-wallet-label">Guthaben</div><strong>Digital</strong></div>
+              <div class="bw-wallet-stat"><div class="bw-wallet-label">Bonus</div><strong>Punkte</strong></div>
+              <div class="bw-wallet-stat"><div class="bw-wallet-label">Zahlung</div><strong>Cashless</strong></div>
+            </div>
+          </div>
+        </div>
+        <div class="bw-copy reveal">
+          <div class="bw-eyebrow">Apple Wallet Gefühl</div>
+          <h2>Kundenkarte als Membership.</h2>
+          <p>Die Kundenkarte wird nicht wie ein Plastikkärtchen verkauft, sondern wie ein digitales Service-Level: schnell, bargeldlos, wiederkehrend, modern.</p>
+          <div style="margin-top: 30px;">
+            <a href="#vergleich" class="bw-btn bw-btn-primary">Glanz ansehen</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="vergleich" class="bw-before-after">
+    <div class="bw-container">
+      <div class="bw-section-head reveal">
+        <div>
+          <div class="bw-eyebrow">Interaktiver Effekt</div>
+          <h2>Vorher / Nachher als Erlebnis.</h2>
+        </div>
+        <p>Der Slider zeigt das Prinzip: von matt und verschmutzt zu tiefem Glanz. Beispielbilder, keine echte Vorher-/Nachher-Behauptung.</p>
+      </div>
+      <div class="bw-slider reveal" data-slider aria-label="Interaktiver Vorher-Nachher-Vergleich">
+        <div class="bw-slide-img bw-slide-before"></div>
+        <div class="bw-slide-img bw-slide-after" data-after></div>
+        <div class="bw-slider-line" data-line></div>
+        <div class="bw-slider-handle" data-handle>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5"/></svg>
+        </div>
+        <div class="bw-slider-label before">Beispiel · vorher</div>
+        <div class="bw-slider-label after">Konzept · nachher</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="community">
+    <div class="bw-container">
+      <div class="bw-section-head center reveal">
+        <div class="bw-eyebrow">Social-ready</div>
+        <h2>Wittlich wäscht hier.</h2>
+        <p>Die Website denkt Instagram und TikTok mit: Night-Shots, Reels-Optik, Glanzdetails und Community-Vibes, ohne falsche Follower- oder Bewertungszahlen.</p>
+      </div>
+      <div class="bw-social-grid">
+        <div class="bw-social-tile reveal"><img src="assets/bewashed/tunnel-neon.webp" alt="" loading="lazy" /><span class="bw-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="bw-social-label">Night Tunnel</span></div>
+        <div class="bw-social-tile reveal"><img src="assets/bewashed/wet-detail.webp" alt="" loading="lazy" /><span class="bw-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="bw-social-label">Wet Paint</span></div>
+        <div class="bw-social-tile reveal"><img src="assets/bewashed/hero-carwash-night.webp" alt="" loading="lazy" /><span class="bw-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="bw-social-label">After Dark</span></div>
+        <div class="bw-social-tile reveal"><img src="assets/bewashed/self-wash-bay.webp" alt="" loading="lazy" /><span class="bw-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="bw-social-label">Self Wash</span></div>
+        <div class="bw-social-tile reveal"><img src="assets/bewashed/tunnel-neon.webp" alt="" loading="lazy" /><span class="bw-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="bw-social-label">LED Pass</span></div>
+        <div class="bw-social-tile reveal"><img src="assets/bewashed/truck-wash.webp" alt="" loading="lazy" /><span class="bw-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="bw-social-label">Fleet Bay</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="bw-container">
+      <div class="bw-quote reveal">
+        <p>Hier wird <span>gepflegt</span>, nicht gewaschen.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="final" class="bw-final">
+    <div class="bw-container reveal">
+      <div class="bw-eyebrow" style="justify-content:center;">Das war ein Beispielkonzept</div>
+      <h2>So etwas für deinen Betrieb?</h2>
+      <p>Diese Demo zeigt, wie eine lokale Website sofort hochwertiger, technischer und verkaufsstärker wirken kann - mit klarer Story, Conversion-Struktur und Automatisierung im Hintergrund.</p>
+      <div class="cta-row">
+        <a href="../index.html#preis" class="bw-btn bw-btn-primary">
+          Kostenloses Erstgespräch
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+        <a href="../webdesign.html" class="bw-btn bw-btn-ghost">Webdesign ansehen</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="top">
+      <div class="brand">
+        <a href="../index.html#empfang" class="logo" aria-label="Terminautomatisierung Startseite">
+          <svg class="logo-icon" viewBox="0 0 512 512" aria-hidden="true">
+            <g fill="none" stroke="#0A141B" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M40 38 H398"/>
+              <path d="M42 38 C20 38 5 54 5 76 V455 C5 477 21 493 43 493 H196"/>
+              <path d="M506 156 V390 C506 472 488 493 468 493 H322"/>
+              <path d="M66 157 H263"/>
+              <path d="M137 157 V492"/>
+              <path d="M218 392 L331 157 L434 392"/>
+            </g>
+            <circle cx="466" cy="53" r="27" fill="#0F8A5F"/>
+            <path d="M306 402 L341 436 L401 372" fill="none" stroke="#0F8A5F" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="wordmark"><span class="brand-strong">Termin</span><span class="brand-light">automatisierung</span></span>
+        </a>
+        <p>Dein digitaler Empfang - KI-Telefon, Termin-Pipeline und Review-Automation als ein System. Festpreis, festgeschriebener Lieferumfang, DSGVO-konform.</p>
+      </div>
+      <div class="col">
+        <h4>Produkt</h4>
+        <a href="../ki-telefon.html">KI-Telefon-Empfang</a>
+        <a href="../ki-telefon-fitnessstudio.html">Für Fitnessstudios</a>
+        <a href="../webdesign.html">Webdesign</a>
+        <a href="../index.html#preis">Pakete</a>
+      </div>
+      <div class="col">
+        <h4>Unternehmen</h4>
+        <a href="../index.html#ueber-uns">Über uns</a>
+        <a href="../index.html#preis">Pakete &amp; Preise</a>
+        <a href="mailto:info@terminautomatisierung.de">Kontakt</a>
+      </div>
+      <div class="col">
+        <h4>Rechtliches</h4>
+        <a href="../impressum.html">Impressum</a>
+        <a href="../datenschutz.html">Datenschutz</a>
+        <a href="../nutzungsbedingungen.html">Nutzungsbedingungen</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="copy">© 2026 Terminautomatisierung · Bernkastel-Kues · be-washed Wittlich ist hier ein fiktives Demo-Beispiel.</div>
+      <div class="meta">DEMO · NOINDEX · <span>CARWASH</span> · 2026</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealItems = document.querySelectorAll('.reveal');
+  const observer = 'IntersectionObserver' in window
+    ? new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 })
+    : null;
+
+  revealItems.forEach((item, index) => {
+    item.style.transitionDelay = `${Math.min(index % 4, 3) * 70}ms`;
+    if (observer) observer.observe(item);
+    else item.classList.add('in');
+  });
+
+  document.querySelectorAll('[data-slider]').forEach((slider) => {
+    const after = slider.querySelector('[data-after]');
+    const line = slider.querySelector('[data-line]');
+    const handle = slider.querySelector('[data-handle]');
+
+    const setPosition = (clientX) => {
+      const rect = slider.getBoundingClientRect();
+      const pct = Math.max(7, Math.min(93, ((clientX - rect.left) / rect.width) * 100));
+      after.style.clipPath = `inset(0 0 0 ${pct}%)`;
+      line.style.left = `${pct}%`;
+      handle.style.left = `${pct}%`;
+    };
+
+    slider.addEventListener('pointerdown', (event) => {
+      slider.setPointerCapture(event.pointerId);
+      setPosition(event.clientX);
+    });
+    slider.addEventListener('pointermove', (event) => {
+      if (event.buttons || event.pointerType === 'touch') setPosition(event.clientX);
+    });
+  });
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "http://terminautomatisierung.de/beispiele/bewashed-wittlich.html",
+      "url": "http://terminautomatisierung.de/beispiele/bewashed-wittlich.html",
+      "name": "Beispiel: Premium Carwash Website für be-washed Wittlich",
+      "description": "Fiktives Demo-Konzept einer Premium-Carwash-Website für eine Waschanlage in Wittlich. Kein echter Kunde und kein offizieller Relaunch.",
+      "inLanguage": "de",
+      "isPartOf": { "@id": "http://terminautomatisierung.de/#website" },
+      "about": "Demonstrations- und Beispielkonzept für Webdesign von Terminautomatisierung"
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Startseite", "item": "http://terminautomatisierung.de/" },
+        { "@type": "ListItem", "position": 2, "name": "Webdesign", "item": "http://terminautomatisierung.de/webdesign.html" },
+        { "@type": "ListItem", "position": 3, "name": "Beispiel: be-washed Wittlich", "item": "http://terminautomatisierung.de/beispiele/bewashed-wittlich.html" }
+      ]
+    }
+  ]
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Webdesign für lokale Dienstleister — Websites, die Termine bringen | Terminautomatisierung</title>
+<meta name="description" content="Webdesign als Teil der Terminmaschine: Websites für lokale Dienstleister, die nicht nur gut aussehen, sondern Anfragen in Termine verwandeln. Mit Kalender, Bewertungslogik und klarer CTA-Führung." />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href="http://terminautomatisierung.de/webdesign.html" />
+<link rel="stylesheet" href="styles.css" />
+<style>
+  /* ---- webdesign page-scoped ---- */
+  .wd-hero { padding: 88px 0 72px; }
+  .wd-hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 72px; align-items: center; }
+  .wd-hero h1 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: clamp(46px, 6vw, 84px); line-height: 0.98; letter-spacing: -0.025em; margin: 26px 0 24px;
+  }
+  .wd-hero h1 em { color: var(--accent); font-style: italic; }
+  .wd-hero .subline {
+    font-size: 18px; line-height: 1.6; color: var(--fg-dim); font-weight: 300; max-width: 520px; margin-bottom: 32px;
+  }
+  .wd-hero .subline strong { color: var(--fg); font-weight: 500; }
+  .wd-cta-row { display: flex; flex-wrap: wrap; gap: 14px; }
+
+  /* browser mockup */
+  .browser {
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; overflow: hidden;
+    box-shadow: 0 30px 60px -28px rgba(10,17,22,0.22), 0 0 0 1px rgba(15,138,95,0.05);
+    max-width: 440px; margin: 0 auto;
+  }
+  .browser-bar {
+    display: flex; align-items: center; gap: 8px; padding: 12px 16px;
+    background: var(--bg-3); border-bottom: 1px solid var(--line);
+  }
+  .browser-bar .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--line); }
+  .browser-bar .url {
+    margin-left: 10px; flex: 1; font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--fg-dim); background: var(--bg); border: 1px solid var(--line); border-radius: 100px;
+    padding: 6px 14px; letter-spacing: 0.02em;
+  }
+  .browser-body { padding: 26px; }
+  .bm-eyebrow { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent-dim); margin-bottom: 12px; }
+  .bm-title { font-family: 'Instrument Serif', serif; font-size: 30px; line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 14px; }
+  .bm-title em { color: var(--accent); font-style: italic; }
+  .bm-cta {
+    display: inline-flex; align-items: center; gap: 8px; background: var(--fg); color: #FDFDFD;
+    font-family: 'Geist', sans-serif; font-weight: 500; font-size: 13px; padding: 11px 18px; border-radius: 100px; margin-bottom: 20px;
+  }
+  .bm-cta svg { width: 14px; height: 14px; color: var(--accent); }
+  .bm-modules { display: flex; flex-direction: column; gap: 8px; }
+  .bm-mod {
+    display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--fg-2);
+    background: var(--bg); border: 1px solid var(--line-soft); border-radius: 10px; padding: 10px 14px;
+  }
+  .bm-mod svg { width: 16px; height: 16px; color: var(--accent); flex-shrink: 0; }
+
+  /* problem split */
+  .wd-problem { background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+  /* fundament stack */
+  .stack { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .stack-item {
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 28px;
+    transition: border-color .25s ease, transform .25s ease; position: relative;
+  }
+  .stack-item:hover { border-color: rgba(15,138,95,0.4); transform: translateY(-3px); }
+  .stack-item .si-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--bg-3); display: flex; align-items: center; justify-content: center; margin-bottom: 18px; }
+  .stack-item .si-icon svg { width: 22px; height: 22px; color: var(--accent); }
+  .stack-item h3 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 23px; line-height: 1.08; letter-spacing: -0.015em; margin-bottom: 9px; }
+  .stack-item p { font-size: 13.5px; color: var(--fg-dim); line-height: 1.55; }
+
+  /* page structure list */
+  .struct { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .struct-item {
+    background: var(--bg-2); border: 1px solid var(--line-soft); border-radius: 14px; padding: 24px 26px;
+    display: flex; gap: 16px; align-items: flex-start;
+  }
+  .struct-item .sn { font-family: 'JetBrains Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; padding-top: 4px; flex-shrink: 0; }
+  .struct-item h4 { font-family: 'Geist', sans-serif; font-weight: 500; font-size: 15.5px; margin-bottom: 5px; }
+  .struct-item p { font-size: 13.5px; color: var(--fg-dim); line-height: 1.5; }
+
+  /* für wen — branch chips */
+  .who-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .who-card {
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: 16px; padding: 28px;
+    transition: border-color .25s ease, transform .25s ease;
+  }
+  .who-card:hover { border-color: rgba(15,138,95,0.4); transform: translateY(-3px); }
+  .who-card .wc-icon { width: 44px; height: 44px; border-radius: 12px; background: var(--bg-3); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .who-card .wc-icon svg { width: 22px; height: 22px; color: var(--accent); }
+  .who-card h3 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: 22px; line-height: 1.1; letter-spacing: -0.015em; margin-bottom: 7px; }
+  .who-card p { font-size: 13.5px; color: var(--fg-dim); line-height: 1.5; }
+  .who-card .wc-link { margin-top: 14px; display: inline-flex; align-items: center; gap: 6px; font-family: 'JetBrains Mono', monospace; font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent-dim); text-decoration: none; transition: gap .15s; }
+  .who-card .wc-link:hover { gap: 10px; color: var(--accent); }
+  .who-card .wc-link svg { width: 12px; height: 12px; }
+
+  /* not meant — limits */
+  .wd-limits { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+  .wd-limits .col h4 { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-dim); margin-bottom: 24px; }
+  .wd-limits ul { list-style: none; }
+  .wd-limits li { padding: 16px 0; border-bottom: 1px solid var(--line-soft); display: flex; align-items: flex-start; gap: 14px; font-size: 15px; line-height: 1.45; }
+  .wd-limits li svg { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; }
+  .wd-limits .col.is li { color: var(--fg-2); }
+  .wd-limits .col.is li svg { color: var(--accent); }
+  .wd-limits .col.out li { color: var(--fg-dim); }
+  .wd-limits .col.out li svg { color: var(--fg-dim-2); }
+
+  /* example hint band */
+  .ex-band {
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 48px; align-items: center;
+    background:
+      radial-gradient(circle at 100% 0%, rgba(15,138,95,0.10), transparent 55%),
+      var(--bg-2);
+    border: 1px solid rgba(15,138,95,0.4); border-radius: 24px; padding: 52px;
+    box-shadow: 0 28px 56px -32px rgba(15,138,95,0.3);
+  }
+  .ex-band h2 { font-family: 'Instrument Serif', serif; font-weight: 400; font-size: clamp(30px, 3.6vw, 42px); line-height: 1.04; letter-spacing: -0.02em; margin-bottom: 14px; }
+  .ex-band h2 em { color: var(--accent); font-style: italic; }
+  .ex-band p { color: var(--fg-2); font-size: 16px; line-height: 1.6; font-weight: 300; max-width: 440px; margin-bottom: 26px; }
+
+  .wd-final { background: var(--bg-2); border-top: 1px solid var(--line); }
+
+  @media (max-width: 1080px) {
+    .wd-hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    .stack { grid-template-columns: repeat(2, 1fr); }
+    .struct { grid-template-columns: 1fr; }
+    .who-grid { grid-template-columns: 1fr; }
+    .wd-limits { grid-template-columns: 1fr; gap: 32px; }
+    .ex-band { grid-template-columns: 1fr; gap: 32px; padding: 36px 28px; }
+  }
+  @media (max-width: 600px) {
+    .stack { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container inner">
+    <a href="index.html#empfang" class="logo" aria-label="Terminautomatisierung Startseite">
+      <svg class="logo-icon" viewBox="0 0 512 512" aria-hidden="true">
+        <g fill="none" stroke="#0A141B" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M40 38 H398"/>
+          <path d="M42 38 C20 38 5 54 5 76 V455 C5 477 21 493 43 493 H196"/>
+          <path d="M506 156 V390 C506 472 488 493 468 493 H322"/>
+          <path d="M66 157 H263"/>
+          <path d="M137 157 V492"/>
+          <path d="M218 392 L331 157 L434 392"/>
+        </g>
+        <circle cx="466" cy="53" r="27" fill="#0F8A5F"/>
+        <path d="M306 402 L341 436 L401 372" fill="none" stroke="#0F8A5F" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="wordmark"><span class="brand-strong">Termin</span><span class="brand-light">automatisierung</span></span>
+    </a>
+
+    <div class="nav-links">
+      <a href="index.html#empfang">Empfang</a>
+      <a href="index.html#ablauf">So funktioniert's</a>
+      <a href="index.html#preis">Pakete</a>
+      <a href="index.html#ueber-uns">Über uns</a>
+      <a href="index.html#kontakt">Kontakt</a>
+    </div>
+
+    <div class="nav-right">
+      <a href="index.html#preis" class="nav-cta">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+        Erstgespräch
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="wd-hero">
+  <div class="container">
+    <div class="wd-hero-grid">
+      <div class="wd-hero-left">
+        <div class="eyebrow">Leistung · Webdesign</div>
+        <h1>Eine Website, die <em>Termine</em> bringt.</h1>
+        <p class="subline">Schön allein reicht nicht. Wir bauen Websites für lokale Dienstleister, die <strong>Anfragen in Termine verwandeln</strong> — mit klarer Führung, Online-Kalender und Bewertungslogik. Webdesign ist bei uns kein Selbstzweck, sondern der Eingang zu deiner Terminmaschine.</p>
+        <div class="wd-cta-row">
+          <a href="index.html#preis" class="btn btn-primary">
+            <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+            Kostenloses Erstgespräch
+          </a>
+          <a href="beispiele/fitnessstudio-website.html" class="btn btn-ghost">
+            Beispielseite ansehen
+            <svg class="arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="wd-hero-visual">
+        <div class="browser" aria-hidden="true">
+          <div class="browser-bar">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+            <span class="url">dein-betrieb.de</span>
+          </div>
+          <div class="browser-body">
+            <div class="bm-eyebrow">Lokaler Dienstleister</div>
+            <div class="bm-title">Jetzt <em>Termin sichern</em> — in 30 Sekunden.</div>
+            <span class="bm-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Termin buchen</span>
+            <div class="bm-modules">
+              <div class="bm-mod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Online-Kalender · Buchung rund um die Uhr</div>
+              <div class="bm-mod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Bewertungslogik · automatisch nachgefragt</div>
+              <div class="bm-mod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> KI-Empfang · später ergänzbar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- TRUST STRIP -->
+<section class="trust-strip" style="padding: 28px 0;">
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+        Mobil optimiert
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        DSGVO-konform
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        Hosting in der EU
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg>
+        Made in Germany
+      </div>
+      <div class="trust-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+        Festpreis · Festumfang
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="wd-problem">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow">Das eigentliche Problem</div>
+      <h2>Schöne Website —<br>und <em>trotzdem still</em>.</h2>
+      <p>Viele lokale Betriebe haben eine Website, die ordentlich aussieht. Nur passiert nichts: keine Anfragen, keine Termine, kein Follow-up. Eine Website ist kein Erfolg, wenn sie nur da ist.</p>
+    </div>
+    <div class="wd-limits">
+      <div class="col out">
+        <h4>So sieht es meistens aus</h4>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg> Hübsche Startseite, aber kein klarer nächster Schritt für den Besucher.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg> Termine nur per Anruf zu Bürozeiten — wer abends sucht, ist morgen weg.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg> Anfragen versanden, weil niemand sie systematisch nachfasst.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg> Gute Arbeit, aber kaum Bewertungen — weil nie aktiv danach gefragt wird.</li>
+        </ul>
+      </div>
+      <div class="col is">
+        <h4>So bauen wir es</h4>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Jede Seite hat ein klares Ziel und führt den Besucher dorthin.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Termine lassen sich rund um die Uhr direkt online buchen.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Anfragen laufen in eine geordnete Übergabe — nichts geht verloren.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Nach jedem Termin wird automatisch nach einer Bewertung gefragt.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DAS FUNDAMENT -->
+<section>
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow">Webdesign hängt am Fundament</div>
+      <h2>Vier Teile, die<br><em>zusammengehören</em>.</h2>
+      <p>Eine Website wirkt nur, wenn sie mit dem Rest verbunden ist. Deshalb bauen wir Webdesign nie isoliert, sondern auf dem Fundament aus Landingpage, Kalender, Bewertungen und klarer Übergabe.</p>
+    </div>
+    <div class="stack">
+      <div class="stack-item">
+        <div class="si-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></svg></div>
+        <h3>Landingpage</h3>
+        <p>Der Eingang: klar, schnell, mobil optimiert. Vom ersten Blick bis zum CTA in Sekunden — ohne Umwege.</p>
+      </div>
+      <div class="stack-item">
+        <div class="si-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></div>
+        <h3>Kalender</h3>
+        <p>Online-Terminbuchung rund um die Uhr, synchron mit deinem Kalender — der Besucher bucht selbst, ohne anzurufen.</p>
+      </div>
+      <div class="stack-item">
+        <div class="si-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <h3>Bewertungen</h3>
+        <p>Nach jedem Termin fragt das System aktiv nach einer Google-Bewertung — mehr Sterne, mehr Sichtbarkeit, mehr Vertrauen.</p>
+      </div>
+      <div class="stack-item">
+        <div class="si-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg></div>
+        <h3>Klare Übergabe</h3>
+        <p>Jede Anfrage landet geordnet bei dir — als Termin, Lead oder Rückrufwunsch. Kein Kontakt versickert.</p>
+      </div>
+    </div>
+    <p style="text-align:center; margin-top: 28px; font-size: 15px; color: var(--fg-dim); line-height: 1.6; max-width: 620px; margin-left:auto; margin-right:auto;">
+      Der <a href="ki-telefon.html" style="color:var(--accent-dim); text-decoration:none; border-bottom:1px solid rgba(15,138,95,0.3);">KI-Telefon-Empfang</a> ist ein Modul, das du später jederzeit ergänzen kannst — wenn aus der Website auch die Telefonleitung mitwachsen soll.
+    </p>
+  </div>
+</section>
+
+<!-- SEITENSTRUKTUR -->
+<section class="flow-section">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow">Wie eine Seite aufgebaut ist</div>
+      <h2>Struktur, die <em>führt</em> —<br>nicht nur dekoriert.</h2>
+    </div>
+    <div class="struct">
+      <div class="struct-item"><span class="sn">01</span><div><h4>Hero</h4><p>Sofort klar, was du anbietest und für wen — mit dem wichtigsten Schritt direkt im Blick.</p></div></div>
+      <div class="struct-item"><span class="sn">02</span><div><h4>Angebot</h4><p>Was der Besucher bei dir bekommt, verständlich und ohne Floskeln auf den Punkt gebracht.</p></div></div>
+      <div class="struct-item"><span class="sn">03</span><div><h4>Vertrauen</h4><p>Warum man dir glauben kann: Erfahrung, Nähe, Bewertungen — Signale, die Sicherheit geben.</p></div></div>
+      <div class="struct-item"><span class="sn">04</span><div><h4>Ablauf</h4><p>Wie es konkret weitergeht, sobald jemand bucht — damit niemand vor dem CTA zögert.</p></div></div>
+      <div class="struct-item"><span class="sn">05</span><div><h4>FAQ</h4><p>Die typischen Fragen vorab beantwortet, damit kein Zweifel den Termin blockiert.</p></div></div>
+      <div class="struct-item"><span class="sn">06</span><div><h4>CTA</h4><p>Ein klarer, wiederkehrender Handlungsaufruf — buchen oder Erstgespräch, immer erreichbar.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FÜR WEN -->
+<section>
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow">Für wen wir bauen</div>
+      <h2>Lokale Dienstleister mit<br><em>Terminen</em> und Anfragen.</h2>
+      <p>Überall, wo Anrufe und Anfragen über Erfolg entscheiden, lohnt sich eine Website, die führt — statt nur zu existieren.</p>
+    </div>
+    <div class="who-grid">
+      <div class="who-card">
+        <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <h3>Fitnessstudio</h3>
+        <p>Probetrainings, Mitgliedschaften, Kursanfragen — Anfragen kommen ständig, oft nach Feierabend.</p>
+        <a href="ki-telefon-fitnessstudio.html" class="wc-link">Branchenseite ansehen
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="who-card">
+        <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3>Werkstatt</h3>
+        <p>Reparaturen, Inspektionen, Reifenwechsel — jeder verpasste Anruf ist ein verlorener Auftrag.</p>
+      </div>
+      <div class="who-card">
+        <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h3>Physiopraxis</h3>
+        <p>Erst- und Folgetermine, volle Auslastung — Patienten, die nicht durchkommen, gehen woanders hin.</p>
+      </div>
+      <div class="who-card">
+        <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 11h18M5 11V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v4M4 11h16v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/></svg></div>
+        <h3>Gastronomie</h3>
+        <p>Tischreservierungen, Anfragen, Events — am Telefon nicht erreichbar heißt Tisch bleibt leer.</p>
+      </div>
+      <div class="who-card">
+        <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
+        <h3>Weitere lokale Dienstleister</h3>
+        <p>Kosmetik, Handwerk, Beratung — überall, wo Termine das Geschäft tragen, passt das Fundament.</p>
+      </div>
+      <div class="who-card" style="background: linear-gradient(135deg, rgba(15,138,95,0.06), transparent 60%), var(--bg-2); border-color: rgba(15,138,95,0.4);">
+        <div class="wc-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+        <h3>Deine Branche dabei?</h3>
+        <p>Im Erstgespräch klären wir in 20 Minuten, ob das Fundament zu deinem Betrieb passt — ehrlich und unverbindlich.</p>
+        <a href="index.html#preis" class="wc-link">Erstgespräch buchen
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAS NICHT GEMEINT IST -->
+<section class="wd-problem">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow">Damit es keine Missverständnisse gibt</div>
+      <h2>Was Webdesign bei uns<br><em>nicht</em> ist.</h2>
+    </div>
+    <div class="wd-limits">
+      <div class="col out">
+        <h4>Nicht gemeint</h4>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg> Eine reine digitale Visitenkarte, die nur Adresse und Telefonnummer zeigt.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg> Ein Template von der Stange ohne Strategie, Ziel oder Führung.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg> Design um des Designs willen, das gut aussieht, aber nichts auslöst.</li>
+        </ul>
+      </div>
+      <div class="col is">
+        <h4>Sondern</h4>
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Ein Eingang in ein System, das Anfragen in echte Termine verwandelt.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Eigens für deinen Betrieb gebaut — mit eigenen Texten und eigener Struktur.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Verbunden mit Kalender, Bewertungen und optionalem KI-Empfang als ein Ganzes.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEISPIEL-HINWEIS -->
+<section>
+  <div class="container">
+    <div class="ex-band">
+      <div>
+        <div class="eyebrow" style="margin-bottom: 14px;">So sieht das später aus</div>
+        <h2>Schau dir ein <em>Beispielkonzept</em> an.</h2>
+        <p>Damit nichts abstrakt bleibt, zeigen wir an einem fiktiven Fitnessstudio, wie eine fertige Terminmaschine aussehen kann — von der Hero-Sektion bis zur Bewertungslogik. Klar als Beispiel markiert, kein echter Kunde.</p>
+        <a href="beispiele/fitnessstudio-website.html" class="btn btn-primary">
+          Beispielseite ansehen
+          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="browser" aria-hidden="true" style="max-width: 100%;">
+        <div class="browser-bar">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+          <span class="url">beispiel · fitnessstudio</span>
+        </div>
+        <div class="browser-body">
+          <div class="bm-eyebrow">Beispielkonzept</div>
+          <div class="bm-title">Dein erstes <em>Probetraining</em> wartet.</div>
+          <span class="bm-cta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg> Probetraining buchen</span>
+          <div class="bm-modules">
+            <div class="bm-mod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg> Termin online buchen</div>
+            <div class="bm-mod"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg> Bewertungen automatisch</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="wd-final">
+  <div class="container">
+    <div class="section-head center">
+      <div class="eyebrow">Nächster Schritt</div>
+      <h2>Eine Website, die für dich<br><em>arbeitet</em>.</h2>
+      <p>20 Minuten Erstgespräch — kostenlos. Wir schauen uns deinen aktuellen Auftritt an und zeigen, wo Anfragen verloren gehen und wie das Fundament das ändert.</p>
+    </div>
+    <div style="text-align:center;">
+      <a href="index.html#preis" class="btn btn-primary">
+        <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+        Kostenloses Erstgespräch
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="kontakt">
+  <div class="container">
+    <div class="top">
+      <div class="brand">
+        <a href="index.html#empfang" class="logo" aria-label="Terminautomatisierung Startseite">
+          <svg class="logo-icon" viewBox="0 0 512 512" aria-hidden="true">
+            <g fill="none" stroke="#0A141B" stroke-width="22" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M40 38 H398"/>
+              <path d="M42 38 C20 38 5 54 5 76 V455 C5 477 21 493 43 493 H196"/>
+              <path d="M506 156 V390 C506 472 488 493 468 493 H322"/>
+              <path d="M66 157 H263"/>
+              <path d="M137 157 V492"/>
+              <path d="M218 392 L331 157 L434 392"/>
+            </g>
+            <circle cx="466" cy="53" r="27" fill="#0F8A5F"/>
+            <path d="M306 402 L341 436 L401 372" fill="none" stroke="#0F8A5F" stroke-width="28" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="wordmark"><span class="brand-strong">Termin</span><span class="brand-light">automatisierung</span></span>
+        </a>
+        <p>Dein digitaler Empfang — KI-Telefon, Termin-Pipeline und Review-Automation als ein System. Festpreis, festgeschriebener Lieferumfang, DSGVO-konform.</p>
+      </div>
+      <div class="col">
+        <h4>Produkt</h4>
+        <a href="ki-telefon.html">KI-Telefon-Empfang</a>
+        <a href="ki-telefon-fitnessstudio.html">Für Fitnessstudios</a>
+        <a href="webdesign.html">Webdesign</a>
+        <a href="index.html#preis">Pakete</a>
+      </div>
+      <div class="col">
+        <h4>Unternehmen</h4>
+        <a href="index.html#ueber-uns">Über uns</a>
+        <a href="index.html#preis">Pakete &amp; Preise</a>
+        <a href="mailto:info@terminautomatisierung.de">Kontakt</a>
+      </div>
+      <div class="col">
+        <h4>Rechtliches</h4>
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
+      </div>
+    </div>
+    <div class="row">
+      <div class="copy">© 2026 Terminautomatisierung · Bernkastel-Kues</div>
+      <div class="meta">SOLO · DSGVO · <span>BERNKASTEL</span> · 2026</div>
+    </div>
+  </div>
+</footer>
+
+<!-- SCHEMA -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "http://terminautomatisierung.de/webdesign.html",
+      "url": "http://terminautomatisierung.de/webdesign.html",
+      "name": "Webdesign für lokale Dienstleister",
+      "description": "Webdesign als Teil der Terminmaschine: Websites für lokale Dienstleister, die Anfragen in Termine verwandeln — mit Kalender, Bewertungslogik und klarer CTA-Führung.",
+      "inLanguage": "de",
+      "isPartOf": { "@id": "http://terminautomatisierung.de/#website" }
+    },
+    {
+      "@type": "Service",
+      "name": "Webdesign für lokale Dienstleister",
+      "serviceType": "Webdesign und Conversion-Website",
+      "description": "Conversion-orientiertes Webdesign auf dem Fundament aus Landingpage, Online-Kalender, Bewertungsautomation und klarer Lead-Übergabe. Optional ergänzbar um KI-Telefon-Empfang.",
+      "areaServed": "DE",
+      "provider": {
+        "@type": "Organization",
+        "name": "Terminautomatisierung",
+        "url": "http://terminautomatisierung.de/"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Startseite", "item": "http://terminautomatisierung.de/" },
+        { "@type": "ListItem", "position": 2, "name": "Webdesign", "item": "http://terminautomatisierung.de/webdesign.html" }
+      ]
+    }
+  ]
+}
+</script>
+
+</body>
+</html>
