@@ -66,18 +66,19 @@
         <h1>Dein digitaler <em>Empfang</em><br><span class="branche" data-text="branche">für deine Werkstatt</span></h1>
         <p class="subline">Ein KI-System, das ans Telefon geht, Termine bucht, Bewertungen einsammelt — und <strong>nie schläft</strong>. In 10 Werktagen aufgesetzt. Standardisiert geliefert. <span data-text="sub-extra">Speziell für Kfz-Werkstätten eingelernt.</span></p>
 
-        <form class="demo-form" onsubmit="event.preventDefault(); alert('Demo-Anruf-Backend wird verkabelt. Hier wirst du in 10 Sek. von der KI zurückgerufen.');">
+        <form class="demo-form" id="demoCallForm">
           <span class="prefix">+49</span>
-          <input type="tel" placeholder="1234 5678 90" required />
+          <input type="tel" name="phone" placeholder="1234 5678 90" autocomplete="tel" required />
+          <input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp-field" />
           <button type="submit">
             <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
             Demo-Anruf starten
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </button>
         </form>
-        <div class="demo-hint">
+        <div class="demo-hint" id="demoCallStatus" aria-live="polite">
           <span class="dot"></span>
-          DIE KI RUFT DICH IN 10 SEK. ZURÜCK · KEINE SPEICHERUNG
+          MIT KLICK STIMMST DU DEM DEMO-RÜCKRUF ZU
         </div>
       </div>
 
@@ -613,6 +614,48 @@
 
   // init
   setBranche('werkstatt');
+
+  // Demo callback
+  const DEMO_CALLBACK_ENDPOINT = 'https://terminautomatisierung-callback-api.vercel.app/api/callback';
+  const demoCallForm = document.getElementById('demoCallForm');
+  const demoCallStatus = document.getElementById('demoCallStatus');
+
+  demoCallForm?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    const button = form.querySelector('button[type="submit"]');
+    const formData = new FormData(form);
+    const phone = String(formData.get('phone') || '').trim();
+    const company = String(formData.get('company') || '').trim();
+    const activeBranch = document.querySelector('.branchen-switch button.active')?.dataset?.branche || '';
+
+    if (button) button.disabled = true;
+    if (demoCallStatus) demoCallStatus.textContent = 'RÜCKRUF WIRD GESTARTET ...';
+
+    try {
+      const response = await fetch(DEMO_CALLBACK_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phone,
+          company,
+          branch: activeBranch,
+          page: window.location.href,
+          consent: true
+        })
+      });
+
+      if (!response.ok) throw new Error('callback_failed');
+      if (demoCallStatus) demoCallStatus.textContent = 'ERLEDIGT · DER BOT RUFT DICH GLEICH AN';
+      form.reset();
+    } catch {
+      if (demoCallStatus) demoCallStatus.textContent = 'RÜCKRUF GERADE NICHT VERFÜGBAR · BITTE SPÄTER NOCHMAL TESTEN';
+    } finally {
+      window.setTimeout(() => {
+        if (button) button.disabled = false;
+      }, 3000);
+    }
+  });
 
   // Scroll-Reveal
   (function () {

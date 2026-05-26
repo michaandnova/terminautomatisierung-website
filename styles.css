@@ -344,6 +344,13 @@
     padding: 12px 0;
   }
   .demo-form input::placeholder { color: var(--fg-dim-2); }
+  .demo-form .hp-field {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
   .demo-form button {
     background: var(--fg);
     color: #FDFDFD;
@@ -360,6 +367,11 @@
     transition: background .15s, transform .15s;
   }
   .demo-form button:hover { background: #000; }
+  .demo-form button:disabled {
+    cursor: wait;
+    opacity: .68;
+    transform: none;
+  }
   .demo-form button .check {
     width: 16px;
     height: 16px;
